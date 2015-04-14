@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Project 4 &middot; 境溪笔记
+    
+  </title>
+
+  
+  <link rel="stylesheet" href="http://wyonghao.github.io/css/poole.css">
+  <link rel="stylesheet" href="http://wyonghao.github.io/css/syntax.css">
+  <link rel="stylesheet" href="http://wyonghao.github.io/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://wyonghao.github.io/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://wyonghao.github.io/assets/favicon.ico">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://wyonghao.github.io/atom.xml">
+</head>
+
+  
+  <body class="theme-base-0f"> 
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>网志·笔记 <br> by @wyonghao.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="http://wyonghao.github.io/">首页 Home</a>
+    <a class="sidebar-nav-item " href="http://wyonghao.github.io/post">网志 Posts</a>
+
+ 	<a class="sidebar-nav-item " href="http://wyonghao.github.io/posten">Tech Notes</a>
+ 	
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        <a class="sidebar-nav-item " href="http://wyonghao.github.io/research-overview/">Research Overview</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="http://wyonghao.github.io/about/">About</a>
+      
+    
+	
+	<span class="sidebar-nav-item">Currently on master</span>
+    <a class="sidebar-nav-item" href="http://github.com/tummychow/lanyon-hugo/archive/master.zip"><i>Download this theme</i></a>
+    <a class="sidebar-nav-item" href="http://github.com/tummychow/lanyon-hugo"><i>Theme project on GitHub</i></a>
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>Copyright by 王永浩 &copy; 2015. All rights reserved.</p>
+	<p>This site is built on <a href="http://gohugo.io" target="_blank">hugo</a>. Thanks <a href="https://twitter.com/mdo" target="_blank">@mdo</a>, hugo, lanyon-hugo, and Github.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="http://wyonghao.github.io/" title="Home">境溪笔记</a>
+            <small>文字在别处（wyh.io）</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Project 4</h1>
+  <span class="post-date">Apr 5 2015</span>
+  
+
+<h3 id="move-vi:69cd58fec84e83ca21040b989598a9be">Move vi</h3>
+
+<p>One of the principles of effective text editing is moving around very efficiently.</p>
+
+<p>Following are some pointers which may help you do that.</p>
+
+<p>h   move one character left
+j   move one row down
+k   move one row up
+l   move one character right
+w   move to beginning of next word
+b   move to beginning of previous word
+e   move to end of word
+W   move to beginning of next word after a whitespace
+B   move to beginning of previous word before a whitespace
+E   move to end of word before a whitespace</p>
+
+<p>All the above movements can be preceded by a count; e.g. 4j will move down 4 lines.</p>
+
+<p>0   move to beginning of line
+$   move to end of line
+^   move to first non-blank char of the line
+_   same as above, but can take a count to go to a different line
+g_  move to last non-blank char of the line (can also take a count as above)</p>
+
+<p>gg  move to first line
+G   move to last line
+nG  move to n&rsquo;th line of file (where n is a number)</p>
+
+<p>H   move to top of screen
+M   move to middle of screen
+L   move to bottom of screen</p>
+
+<p>z.  put the line with the cursor at the center
+zt  put the line with the cursor at the top
+zb  put the line with the cursor at the bottom of the screen</p>
+
+<p>Ctrl-D  move half-page down
+Ctrl-U  move half-page up
+Ctrl-B  page up
+Ctrl-F  page down
+Ctrl-o  jump to last cursor position
+Ctrl-i  jump to next cursor position</p>
+
+<p>n   next matching search pattern
+N   previous matching search pattern
+*   next word under cursor</p>
+
+<h1 id="previous-word-under-cursor:69cd58fec84e83ca21040b989598a9be">previous word under cursor</h1>
+
+<p>g*  next matching search pattern under cursor
+g#  previous matching search pattern under cursor</p>
+
+<p>%   jump to matching bracket { } [ ] ( )</p>
+
+<p>See :help {command} (for example, :help g_) for all of the above if you want more details.
+CommentsEdit</p>
+
+<p>Ctrl-i jump to previous cursor position <C-i> (or <Tab>) goes to the next cursor position in the jump list, and does nothing unless you&rsquo;ve already moved to an older position in the jump list using <C-o>. (Spiiph 12:37, October 5, 2009 (UTC))</p>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+  </body>
+</html>
+
