@@ -1,0 +1,37 @@
+#N canvas 228 28 1022 712 10;
+#X obj 36 220 readsf~ 2;
+#X obj 37 301 dac~;
+#X msg 53 169 1;
+#X msg 65 190 0;
+#X msg 48 24 open SpeakSoftly_NorthIsFalse/01_Loop1.wav;
+#X obj 73 10 bng 8 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X msg 88 54 open SpeakSoftly_NorthIsFalse/02_Loop2.wav;
+#X obj 107 156 readsf~ 2;
+#X msg 130 91 1;
+#X msg 166 91 0;
+#X obj 179 209 readsf~ 2;
+#X msg 262 142 0;
+#X msg 158 73 open SpeakSoftly_NorthIsFalse/04_Rhodes.wav \, start
+;
+#X msg 203 123 1;
+#X connect 0 0 1 0;
+#X connect 0 1 1 1;
+#X connect 2 0 0 0;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 4 0;
+#X connect 5 0 2 0;
+#X connect 5 0 6 0;
+#X connect 5 0 8 0;
+#X connect 5 0 12 0;
+#X connect 6 0 7 0;
+#X connect 7 0 1 0;
+#X connect 7 1 1 1;
+#X connect 8 0 7 0;
+#X connect 9 0 7 0;
+#X connect 10 0 1 0;
+#X connect 10 0 1 1;
+#X connect 11 0 10 0;
+#X connect 12 0 10 0;
+#X connect 13 0 10 0;
