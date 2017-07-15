@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <link href="css/zen.css" type="text/css" rel="stylesheet">
+    <title>U-boot Labs</title>
+  </head>
+  <!-- TODO 
+1) add table of content using JS 2017 07 15--> <body>
+    <div> <title_font> U-Boot on QEMU </title_font>
+      <ol id="mozToc">
+        <li> <a href="#Lab1"> Lab 1 Setup u-boot ARM development Environment </a>
+        </li>
+        <li> <a href="#Lab2">Lab 2 modify some code</a> </li>
+        <li> <a href="#Lab3">Lab 3 Network based u-boot</a> </li>
+      </ol>
+      <h1> <a name="Lab1"></a>Lab 1 Setup u-boot ARM development Environment </h1>
+      Aim to configure u-boot development environment, the commands use <code>code
+        style</code>.<br>
+      <h2> 1. Linux development environment </h2>
+      <p> 本次实验用的Linux的发行版是 Ubuntu 16.04.2 LTS。使用Linaro （ <a href="https://www.linaro.org/">https://www.linaro.org/</a>
+        ）提供的开发工具链。Linaro 是一个ARM开发机构的联盟，旨在建立一个ARM开发的生态系统。 </p>
+      <h2> 2. 加入专门针对ARM Linux开发提供编译开发环境的源PPA </h2>
+      <p> 理解什么是PPA（Personal Package Archives），把软件源加入ubuntu的详细指导参见如下软件： </p>
+      <p> <a href="https://wiki.linaro.org/Platform/Systems/Repository">
+          https://wiki.linaro.org/Platform/Systems/Repository </a> </p>
+      <b> a) add the key </b> <br>
+      <code> wget -O - http://repo.linaro.org/ubuntu/linarorepo.key|sudo apt-key
+        add -</code><b><br>
+        <br>
+        b) add to sources list </b>
+      <p> Add the linaro-overlay repo with these lines into below file </p>
+      <p> /etc/apt/sources.list.d/linaro-maintainers-ubuntu-tools-xenial.list </p>
+      <p> that contains these lines: </p>
+      <p><code> deb http://repo.linaro.org/ubuntu/linaro-overlay xenial main </code></p>
+      <p><code> deb-src http://repo.linaro.org/ubuntu/linaro-overlay xenial main
+        </code></p>
+      c) then check the update , sudo apt-get update etc.
+      <p><code> sudo apt-get install linaro-image-tools qemu-user-static
+          qemu-system </code></p>
+      <p> 1创建linux 的image的工具，2 This package provides the user mode emulation
+        binaries, built statically. 3. </p>
+      <p> e) $ sudo apt-get install gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
+      </p>
+      <p> f) *$ sudo apt install bridge-utils </p>
+      <p> 网卡桥连代码，也许可以暂时不装 </p>
+      <pre>$ wget -c ftp://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2</pre>
+      <pre>$ tar xvf u-boot-2017.05.tar.bz2</pre>
+      <pre>$ cd u-boot-2017.05/</pre>
+      <pre>$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_ca9x4_defconfig</pre>
+      <pre>$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-</pre>
+      using the following to check supported machine types<br>
+      <code>qemu-system-arm --machine help</code><br>
+      Finally boot u-boot with QEMU simulated hardware<br>
+      <p><code> qemu-system-arm -M vexpress-a9 -m 128M -nographic -kernel u-boot</code></p>
+      <h1><a name="Lab2"></a> Lab 2 modify some code </h1>
+      <p> 1 . Modify the .config make delay longer </p>
+      <p> 2. Check flash memory information and modify the flash code to make it
+        works </p>
+      <h1><a name="Lab3"></a> Lab 3 Network based u-boot </h1>
+    </div>
+  </body>
+</html>
