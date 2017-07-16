@@ -21,8 +21,8 @@ body {
 	background: #fff url(http://csszengarden.com/001/blossoms.jpg) no-repeat bottom right; 
 	font-size: 14px;
     /*below 3 line centers content*/
-    max-width: 900px; /*YW this controls the whole body width*/
-    margin: 15 auto ;
+    max-width: 960px; /*YW this controls the whole body width*/
+    margin: 0 auto ;
 	}
 
 p { 
