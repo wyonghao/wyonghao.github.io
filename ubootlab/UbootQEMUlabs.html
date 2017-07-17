@@ -46,8 +46,8 @@
       <pre>$ wget -c ftp://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2</pre>
       <pre>$ tar xvf u-boot-2017.05.tar.bz2</pre>
       <pre>$ cd u-boot-2017.05/</pre>
-      <pre>$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_ca9x4_defconfig</pre>
-      <pre>$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-</pre>
+      <pre><code>$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_ca9x4_defconfig</code></pre>
+      <pre><code>$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-</code></pre>
       using the following to check supported machine types<br>
       <code>qemu-system-arm --machine help</code><br>
       Finally boot u-boot with QEMU simulated hardware<br>
@@ -55,10 +55,107 @@
       To kill the QEMU system<br>
       <code>killall qemu-system-arm</code><br>
       <h1><a name="Lab2"></a> Lab 2 modify some code </h1>
-      <p> 1 . Modify the .config make delay longer </p>
-      <p> 2. Check flash memory information and modify the flash code to make it
-        works </p>
+      <p> 1 . Modify the .config </p>
+      <p>2. using "<code>make menuconfig</code>" , same as 1) also used in Linux
+        kernel config.</p>
+      3. check some board info<br>
+      <code>=&gt; bdinfo <br>
+        arch_number = 0x000008E0<br>
+        boot_params = 0x60002000<br>
+        DRAM bank&nbsp;&nbsp; = 0x00000000<br>
+        -&gt; start&nbsp;&nbsp;&nbsp; = 0x60000000<br>
+        -&gt; size&nbsp;&nbsp;&nbsp;&nbsp; = 0x08000000<br>
+        DRAM bank&nbsp;&nbsp; = 0x00000001<br>
+        -&gt; start&nbsp;&nbsp;&nbsp; = 0x80000000<br>
+        -&gt; size&nbsp;&nbsp;&nbsp;&nbsp; = 0x00000004<br>
+        eth0name&nbsp;&nbsp;&nbsp; = smc911x-0<br>
+        ethaddr&nbsp;&nbsp;&nbsp;&nbsp; = 52:54:00:12:34:56<br>
+        current eth = smc911x-0<br>
+        ip_addr&nbsp;&nbsp;&nbsp;&nbsp; = &lt;NULL&gt;<br>
+        baudrate&nbsp;&nbsp;&nbsp; = 38400 bps<br>
+        TLB addr&nbsp;&nbsp;&nbsp; = 0x67FF0000<br>
+        relocaddr&nbsp;&nbsp; = 0x67F7C000<br>
+        reloc off&nbsp;&nbsp; = 0x0777C000<br>
+        irq_sp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 0x67EDBEF0<br>
+        sp start&nbsp;&nbsp;&nbsp; = 0x67EDBEE0</code><br>
+      <br>
+      3. Check flash memory information and modify the flash code to make it
+      works<br>
+      u-boot command:<br>
+      <code>setenv bootdelay 60<br>
+        saveenv<br>
+        =&gt; saveenv<br>
+        Saving Environment to Flash...<br>
+        Error: end address not on sector boundary<br>
+        Error: end address not on sector boundary<br>
+        =&gt; </code><br>
+      Flash bank 1:<br>
+      <code>=&gt; flinfo<br>
+        Bank # 1: CFI conformant flash (32 x 16)&nbsp; Size: 64 MB in 128
+        Sectors<br>
+        &nbsp; Intel Extended command set, Manufacturer ID: 0x89, Device ID:
+        0x0018<br>
+        &nbsp; Erase timeout: 16384 ms, write timeout: 3 ms<br>
+        &nbsp; Buffer write timeout: 3 ms, buffer size: 2048 bytes<br>
+        &nbsp; Sector Start Addresses:<br>
+        &nbsp; 40000000&nbsp;&nbsp; RO&nbsp;&nbsp;
+        40080000&nbsp;&nbsp;&nbsp;&nbsp; ......</code><br>
+      Flash bank 2:<br>
+      <code>Bank # 2: CFI conformant flash (32 x 16)&nbsp; Size: 64 MB in 128
+        Sectors<br>
+        &nbsp; Intel Extended command set, Manufacturer ID: 0x89, Device ID:
+        0x0018<br>
+        &nbsp; Erase timeout: 16384 ms, write timeout: 3 ms<br>
+        &nbsp; Buffer write timeout: 3 ms, buffer size: 2048 bytes<br>
+        &nbsp; Sector Start Addresses:<br>
+        &nbsp; 44000000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 44080000&nbsp;
+        ......... </code><br>
+      <h2>Modify the Flash Driver Code</h2>
+      <p>Because of flinfo<br>
+        Bank # 1: CFI conformant flash (32 x 16)&nbsp; Size: 64 MB in 128
+        Sectors<br>
+        &nbsp; Intel Extended command set, Manufacturer ID: 0x89, Device ID:
+        0x0018<br>
+        ——<br>
+        From the output above, we know 64MB / 128 sector = 64*1024 K / 128 = 512
+        K per Sector<br>
+        Therefore we modify this file: <code>include/configs/vexpress_common.h</code><br>
+        <code>cp include/configs/vexpress_common.h
+          include/configs/vexpress_common.h.org</code></p>
+      <p><code>/* 255 0x40000 sectors + first or last sector may have 4 erase
+          regions = 259 */<br>
+          #define CONFIG_SYS_MAX_FLASH_SECT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          256&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          /*YW 259-&gt;256 Max sectors */<br>
+          #define
+          FLASH_MAX_SECTOR_SIZE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          0x00080000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*YW 40000-&gt;80000
+          256-&gt;512 KB sectors */</code></p>
+      <p><br>
+        Display the Env variables in flash</p>
+      <p><code>md 47F00000 400</code><br>
+        <code>=&gt; md 47F00000 100<br>
+          47f00000: a51c88ee 68637261 6d72613d 75616200&nbsp;&nbsp;&nbsp;
+          ....arch=arm.bau<br>
+          47f00010: 74617264 38333d65 00303034 72616f62&nbsp;&nbsp;&nbsp;
+          drate=38400.boar<br>
+          47f00020: 65763d64 65727078 62007373 6472616f&nbsp;&nbsp;&nbsp;
+          d=vexpress.board<br>
+          47f00030: 6d616e5f 65763d65 65727078 62007373&nbsp;&nbsp;&nbsp;
+          _name=vexpress.b<br>
+          47f00040: 5f746f6f 63735f61 74706972 616f6c3d&nbsp;&nbsp;&nbsp;
+          oot_a_script=loa</code></p>
+      <p><code>......</code></p>
+      <p><br>
+        Display the Env variables in flash</p>
+      <p><code></code>reset the board now the Env is saved!</p>
       <h1><a name="Lab3"></a> Lab 3 Network based u-boot </h1>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
     </div>
   </body>
 </html>
