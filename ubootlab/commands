@@ -1,4 +1,0 @@
-uname -a
-lsb_release -a
-
-sudo sysctl net.ipv4.ip_default_ttl = 65
