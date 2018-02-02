@@ -36,5 +36,6 @@ extensions = {
     r'.midi' : 'sound2.gif',
     r'.py' : 'python.gif',
     r'.tex' : 'tex.gif',
+    r'.ppt' : 'ppt.png',
     r'.tar' : 'tar.gif'
 }
