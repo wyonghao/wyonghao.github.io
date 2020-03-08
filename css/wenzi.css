@@ -15,7 +15,9 @@ html {
 	}
 
 body { 
-	font: 100% georgia, sans-serif;
+	/* font: 100% georgia, sans-serif; */ /*YW like other fonts in main.css*/
+	font-family: verdana, arial, sans-serif;
+	font-size: 14px;
 	line-height: 1.88889;
 	color: #555753; 
 	background: #fff url(http://csszengarden.com/001/blossoms.jpg) no-repeat bottom right; 
