@@ -6,16 +6,30 @@
     <title>DSP teaching resources by Leo Wang</title>
   </head>
   <body>
-      <!-- warning this is not good -->
+      <!-- TODO 
+      1) to add code block style and make a code in this page
+  
+      -->
       <h1>DSP resources</h1>
       <element class="intro">
     It is recommended to use "homebrew" for Mac system and to use "Chocolatey" in a Windows based system to install different useful open source development tools, such as ffmpeg as most popular media file processing library and toolsets.
+    <br>
+    For Windows : 
+    <pre>
+    <code>
+  choco install ffmpeg -y
+  ffmpeg -i .\task2sig.wav task2sig.mp3
+    </code>
+  </pre>
 
-    For windows : " choco install ffmpeg -y "
-
-    "ffmpeg -i .\task2sig.wav task2sig.mp3"
-
-    for more detailed usage of ffmpeg please check the document.
+  For MAC : 
+  <pre>
+  <code>
+brew install ffmpeg
+ffmpeg -i .\task2sig.wav task2sig.mp3
+  </code>
+</pre>
+ for more detailed usage of ffmpeg please check the document.
     </element>
 
     <h2>DIG5111 Audio files</h2>

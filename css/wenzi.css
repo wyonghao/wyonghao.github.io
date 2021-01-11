@@ -61,7 +61,13 @@ title_font {
   	font: 175% georgia, sans-serif;
 	  font-weight: bold; 
 }
-
+/*adding code style YW*/
+pre code {
+	background-color: #eee;
+	border: 1px solid #999;
+	display: block;
+	padding: 0px;
+  }
 
 
 /* specific divs */
